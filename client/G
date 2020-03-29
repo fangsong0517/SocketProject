@@ -1,0 +1,2 @@
+gcc -I ../common client.c ../common/tcp_client.c ../common/common.c -lpthread
+
