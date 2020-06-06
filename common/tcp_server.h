@@ -1,8 +1,8 @@
 /*************************************************************************
 	> File Name: tcp_server.h
-	> Author:fangsong
-	> Mail: 
-	> Created Time: 2020年03月28日 星期六 14时31分13秒
+	> Author: suyelu
+	> Mail: suyelu@haizeix.com
+	> Created Time: 六  3/28 14:24:14 2020
  ************************************************************************/
 
 #ifndef _TCP_SERVER_H
