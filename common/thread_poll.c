@@ -21,6 +21,7 @@ void do_echo(struct User *user) {
         else 
             DBG(L_RED" %s :"NONE L_GREEN"%s\n"NONE, user->name, msg.msg);
         send(user->fd, (void *)&msg, sizeof(msg), 0);
+        //memset(msg.msg, 0, sizeof(msg.msg));
     }
 }
 

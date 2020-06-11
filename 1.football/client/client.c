@@ -254,7 +254,7 @@ int main(int argc, char **argv) {
             struct FootBallMsg msg;
             ssize_t rsize = recv(sockfd, (void *)&msg, sizeof(msg), 0);
             if (msg.type & FT_TEST) {
-                DBG(RED "HeartBeat from Server 💗" NONE "\n");
+                DBG(RED "HeartBeat from Server ❤" NONE "\n");
                 msg.type = FT_ACK;
                 send(sockfd, (void *)&msg, sizeof(msg), 0);
             } else if (msg.type & (FT_MSG | FT_WALL)) {
@@ -269,7 +269,7 @@ int main(int argc, char **argv) {
             msg.type = FT_MSG;
             DBG(YELLOW "Input Message : " NONE);
             fflush(stdout);
-            memset(msg.msg, 0, sizeof(msg.msg));
+           // memset(msg.msg, 0, sizeof(msg.msg));
             scanf("%[^\n]s", msg.msg);
             getchar();
             send(sockfd, (void *)&msg, sizeof(msg), 0);
