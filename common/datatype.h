@@ -26,7 +26,7 @@ struct Point{
 struct User{
     int team; //0  1
     char name[20];//name
-    int fd;
+    int fd; //存储用户的连接
     int online;
     int flag; //未响应的次数
    // struct sockaddr_in addr;
@@ -57,8 +57,8 @@ struct TransMsg{
 #define FT_WALL 0x02
 #define FT_MSG 0x04
 #define FT_ACK 0x08
-/*测试，广播,xinxi ,queren*/
-struct FootBallMsg {
+/*测试，广播, 信息 ,确认*/
+struct FootBallMsg {//登陆后的信息交互
     int type;
     int size;
     char msg[MAXMSG];

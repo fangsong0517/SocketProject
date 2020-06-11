@@ -269,7 +269,7 @@ int main(int argc, char **argv) {
             msg.type = FT_MSG;
             DBG(YELLOW "Input Message : " NONE);
             fflush(stdout);
-           // memset(msg.msg, 0, sizeof(msg.msg));
+            memset(msg.msg, 0, sizeof(msg.msg));
             scanf("%[^\n]s", msg.msg);
             getchar();
             send(sockfd, (void *)&msg, sizeof(msg), 0);

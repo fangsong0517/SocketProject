@@ -14,7 +14,7 @@ FT_ACK	common/datatype.h	59;"	d
 FT_MSG	common/datatype.h	58;"	d
 FT_TEST	common/datatype.h	56;"	d
 FT_WALL	common/datatype.h	57;"	d
-FootBallMsg	common/datatype.h	/^struct FootBallMsg {$/;"	s
+FootBallMsg	common/datatype.h	/^struct FootBallMsg {\/\/登陆后的信息交互$/;"	s
 Football	game.h	/^WINDOW *Football, *Message, *Help, *Score, *Write;$/;"	v
 GREEN	common/color.h	16;"	d
 HEAD_H	common/head.h	9;"	d
@@ -29,6 +29,8 @@ LogRequest	common/datatype.h	/^struct LogRequest{$/;"	s
 LogRequest	datatype.h	/^struct LogRequest{$/;"	s
 LogResponse	common/datatype.h	/^struct LogResponse{$/;"	s
 LogResponse	datatype.h	/^struct LogResponse{$/;"	s
+MAX	common/heart_beat.c	11;"	d	file:
+MAX	common/sub_reactor.c	11;"	d	file:
 MAX	common/udp_epoll.c	13;"	d	file:
 MAX	game.h	11;"	d
 MAXMSG	common/datatype.h	10;"	d
@@ -59,6 +61,8 @@ _DATATYPE_H	common/datatype.h	9;"	d
 _DATATYPE_H	datatype.h	9;"	d
 _GAME_H	game.h	9;"	d
 _GLOBAL_H	common/global.h	9;"	d
+_HEART_BEAT_H	common/heart_beat.h	9;"	d
+_SUB_REACTOR_H	common/sub_reactor.h	9;"	d
 _TCP_CLIENT_H	common/tcp_client.h	9;"	d
 _TCP_CLIENT_H	common/udp_client.h	9;"	d
 _TCP_SERVER_H	common/tcp_server.h	9;"	d
@@ -68,7 +72,6 @@ _UDP_EPOLL_H	common/udp_epoll.h	9;"	d
 add_event	common/udp_epoll.c	/^void add_event(int epollfd, int fd, int events) {$/;"	f
 add_event_ptr	common/udp_epoll.c	/^void add_event_ptr(int epollfd, int fd, int events, struct User *user) {$/;"	f
 add_to_sub_reactor	common/udp_epoll.c	/^void add_to_sub_reactor(struct User *user) {$/;"	f
-addr	common/datatype.h	/^    struct sockaddr_in addr;$/;"	m	struct:User	typeref:struct:User::sockaddr_in
 addr	datatype.h	/^    struct sockaddr_in addr;$/;"	m	struct:User	typeref:struct:User::sockaddr_in
 bepollfd	server/server.c	/^int repollfd, bepollfd;$/;"	v
 bteam	server/server.c	/^struct User *bteam;$/;"	v	typeref:struct:User
@@ -93,8 +96,8 @@ diry	common/datatype.h	/^    int diry;$/;"	m	struct:TransMsg
 diry	datatype.h	/^    int diry;$/;"	m	struct:TransMsg
 do_echo	common/thread_poll.c	/^void do_echo(struct User *user) {$/;"	f
 draw	game.h	/^void *draw(void *arg) {$/;"	f
-epollfd	common/thread_poll.h	/^    int epollfd;$/;"	m	struct:task_queue
-fd	common/datatype.h	/^    int fd;$/;"	m	struct:User
+epollfd	common/thread_poll.h	/^    int epollfd;\/\/对应的从反应堆$/;"	m	struct:task_queue
+fd	common/datatype.h	/^    int fd; \/\/存储用户的连接$/;"	m	struct:User
 find_sub	common/udp_epoll.c	/^int find_sub(struct User *team) {$/;"	f
 flag	common/chatroom.h	/^    int flag;$/;"	m	struct:Msg
 flag	common/datatype.h	/^    int flag; \/\/未响应的次数$/;"	m	struct:User
@@ -109,6 +112,8 @@ gotoxy	game.h	/^void gotoxy(int x, int y) {$/;"	f
 gotoxy_putc	game.h	/^void gotoxy_putc(int x, int y,char c) {$/;"	f
 gotoxy_puts	game.h	/^void gotoxy_puts(int x, int y,char *c) {$/;"	f
 head	common/thread_poll.h	/^    int head;$/;"	m	struct:task_queue
+heart_beat	common/heart_beat.c	/^void *heart_beat(void *arg) {$/;"	f
+heart_beat_team	common/heart_beat.c	/^void heart_beat_team(struct User *team) {$/;"	f
 height	common/datatype.h	/^    int height;$/;"	m	struct:Map
 height	datatype.h	/^    int height;$/;"	m	struct:Map
 initfootball	game.h	/^void initfootball() {$/;"	f
@@ -116,7 +121,7 @@ kick	common/datatype.h	/^    int kick;$/;"	m	struct:Ctrl
 kick	datatype.h	/^    int kick;$/;"	m	struct:Ctrl
 loc	common/datatype.h	/^    struct Point loc;\/\/position$/;"	m	struct:User	typeref:struct:User::Point
 loc	datatype.h	/^    struct Point loc;\/\/position$/;"	m	struct:User	typeref:struct:User::Point
-main	client/client.c	/^int main(int argc, char **argv)  {$/;"	f
+main	client/client.c	/^int main(int argc, char **argv) {$/;"	f
 main	common/test.c	/^int main() {$/;"	f
 main	server/server.c	/^int main(int argc, char **argv) {$/;"	f
 main	udp/client.c	/^int main(int argc, char **argv) {$/;"	f
@@ -132,12 +137,13 @@ msg	common/datatype.h	/^    char msg[512];$/;"	m	struct:LogResponse
 msg	common/datatype.h	/^    char msg[MAXMSG];$/;"	m	struct:FootBallMsg
 msg	datatype.h	/^    char msg[512];$/;"	m	struct:LogRequest
 msg	datatype.h	/^    char msg[512];$/;"	m	struct:LogResponse
-mutex	common/thread_poll.h	/^    pthread_mutex_t mutex;$/;"	m	struct:task_queue
+mutex	common/thread_poll.h	/^    pthread_mutex_t mutex;\/\/互斥锁$/;"	m	struct:task_queue
 name	common/datatype.h	/^    char name[20];$/;"	m	struct:LogRequest
 name	common/datatype.h	/^    char name[20];\/\/name$/;"	m	struct:User
 name	datatype.h	/^    char name[20];$/;"	m	struct:LogRequest
 name	datatype.h	/^    char name[20];\/\/name$/;"	m	struct:User
 online	common/datatype.h	/^    int online;$/;"	m	struct:User
+port	server/server.c	/^int port = 0;$/;"	v
 repollfd	server/server.c	/^int repollfd, bepollfd;$/;"	v
 retval	common/chatroom.h	/^    int retval;$/;"	m	struct:RecvMsg
 rteam	server/server.c	/^struct User *rteam;$/;"	v	typeref:struct:User
@@ -151,7 +157,8 @@ socket_create_udp	common/udp_server.c	/^int socket_create_udp(int port) {$/;"	f
 socket_udp	common/udp_client.c	/^int socket_udp() {$/;"	f
 start	common/datatype.h	/^    struct Point start;  \/\/ Starting Point $/;"	m	struct:Map	typeref:struct:Map::Point
 start	datatype.h	/^    struct Point start;  \/\/ Starting Point $/;"	m	struct:Map	typeref:struct:Map::Point
-sum	common/thread_poll.h	/^    int sum;$/;"	m	struct:task_queue
+sub_reactor	common/sub_reactor.c	/^void *sub_reactor(void *arg) {$/;"	f
+sum	common/thread_poll.h	/^    int sum;\/\/多少个$/;"	m	struct:task_queue
 tail	common/thread_poll.h	/^    int tail;$/;"	m	struct:task_queue
 task_queue	common/thread_poll.h	/^struct task_queue{$/;"	s
 task_queue_init	common/thread_poll.c	/^void task_queue_init(struct task_queue *taskQueue, int sum, int epollfd){$/;"	f
@@ -159,7 +166,7 @@ task_queue_pop	common/thread_poll.c	/^struct User *task_queue_pop(struct task_qu
 task_queue_push	common/thread_poll.c	/^void task_queue_push(struct task_queue *taskQueue, struct User *user) {$/;"	f
 team	common/datatype.h	/^    int team; \/\/0  1$/;"	m	struct:User
 team	common/datatype.h	/^    int team;\/\/0 RED 1 BLUE$/;"	m	struct:LogRequest
-team	common/thread_poll.h	/^    struct User **team;$/;"	m	struct:task_queue	typeref:struct:task_queue::User
+team	common/thread_poll.h	/^    struct User **team;\/\/队$/;"	m	struct:task_queue	typeref:struct:task_queue::User
 team	datatype.h	/^    int team; \/\/0  1$/;"	m	struct:User
 team	datatype.h	/^    int team;\/\/0 RED 1 BLUE$/;"	m	struct:LogRequest
 thread_run	common/thread_poll.c	/^void *thread_run(void *arg) {$/;"	f

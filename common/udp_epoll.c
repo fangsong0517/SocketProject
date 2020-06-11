@@ -102,7 +102,7 @@ int udp_accept(int epollfd, int fd, struct User *user) {
 }
 
 
-int find_sub(struct User *team) {
+int find_sub(struct User *team) {//找到不在线的空
     for(int i = 0; i< MAX; i++) {
         if(!team[i].online) return i;
     }
@@ -113,7 +113,7 @@ void add_to_sub_reactor(struct User *user) {
     struct User *team = (user->team ? bteam : rteam);
     DBG(YELLOW"Main Thread : "NONE"Add to sub_reactor.\n");
     int sub = find_sub(team);
-    team[sub] = *user;
+    team[sub] = *user;//数组中存放的结构体user
     team[sub].online = 1;
     team[sub].flag = 10;
     DBG(L_RED"sub = %d, name = %s\n"NONE, sub, team[sub].name);

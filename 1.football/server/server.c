@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
                     DBG(YELLOW "Main Thread" NONE
                                " : Add %s to %s sub_reactor.\n",
                         user.name, (user.team ? "BLUE" : "RED"));
-                    add_to_sub_reactor(&user);
+                    add_to_sub_reactor(&user);//用户加到相应的反应堆里
                 }
             } else {
                 recv(events[i].data.fd, buff, sizeof(buff), 0);
