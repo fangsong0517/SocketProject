@@ -11,7 +11,7 @@
 #include "../common/udp_epoll.h"
 #include "../common/udp_server.h"
 #include "../game.h"
-
+#include "../common/server_exit.h"
 char *conf = "./server.conf";
 
 struct User *rteam;
@@ -82,6 +82,7 @@ int main(int argc, char **argv) {
     pthread_create(&blue_t, NULL, sub_reactor, (void *)&blueQueue);
     pthread_create(&heart_t, NULL, heart_beat, NULL);
 
+    signal(SIGINT, server_exit);
     struct epoll_event ev, events[MAX * 2];
     ev.events = EPOLLIN;
     ev.data.fd = listener;

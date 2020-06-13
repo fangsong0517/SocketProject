@@ -28,4 +28,6 @@
 #include "./color.h"
 #include "./common.h"
 #include "./datatype.h"
+#include <curses.h>
+#include <signal.h>
 #endif

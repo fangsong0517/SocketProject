@@ -6,22 +6,29 @@
  ************************************************************************/
 
 #include "thread_poll.h"
+#include "udp_epoll.h"
+extern int repollfd, bepollfd;
 
 void do_echo(struct User *user) {
     struct FootBallMsg msg;
     int size = recv(user->fd, (void *)&msg, sizeof(msg), 0);
+    user->flag = 10;
     if(msg.type & FT_ACK) {
         if(user->team)//blue_team
             DBG(L_BLUE" %s "NONE"❤\n", user->name);
         else //red_team
             DBG(L_RED" %s "NONE"❤\n", user->name);            
-    } else if(msg.type & (FT_WALL | FT_MSG)) {//信息
+    } else if(msg.type & (FT_WALL | FT_MSG)) {
         if(user->team)
             DBG(L_BLUE" %s :"NONE L_RED"%s\n"NONE, user->name, msg.msg);
         else 
             DBG(L_RED" %s :"NONE L_RED"%s\n"NONE, user->name, msg.msg);
         send(user->fd, (void *)&msg, sizeof(msg), 0);//把信息回过去
-        //memset(msg.msg, 0, sizeof(msg.msg));
+    } else if(msg.type & FT_FIN) {
+        DBG(RED"%s logout.\n", user->name);
+        user->online = 0;
+        int epollfd_tmp = (user->team ? bepollfd : repollfd);
+        del_event(epollfd_tmp, user->fd);
     }
 }
 

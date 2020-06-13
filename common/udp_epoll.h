@@ -9,8 +9,9 @@
 #define _UDP_EPOLL_H
 #include "datatype.h"
 void add_event(int epollfd, int fd, int events);
-void del_event(int epollfd, int fd, int events);
+void del_event(int epollfd, int fd);
 int udp_connect(int epollfd, struct sockaddr_in *serveraddr);
+int check_online(struct LogRequest *request);
 int udp_accept(int epollfd, int fd, struct User *user);
 void add_to_sub_reactor(struct User *user);
 #endif
