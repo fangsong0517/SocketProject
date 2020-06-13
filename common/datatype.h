@@ -58,10 +58,14 @@ struct TransMsg{
 #define FT_MSG 0x04
 #define FT_ACK 0x08
 #define FT_FIN 0x10
+
 /*测试，广播, 信息 ,确认*/
-struct FootBallMsg {//登陆后的信息交互
+struct FootBallMsg {
+    //登陆后的信息交互
     int type;
     int size;
+    int team;
+    char name[20];
     char msg[MAXMSG];
 };
 
