@@ -49,15 +49,15 @@ struct Ctrl {
     int diry;
 };
 
-#define FT_TEST 0x01
-#define FT_WALL 0x02
-#define FT_MSG 0x04
-#define FT_ACK 0x08
-#define FT_FIN 0x10
-#define FT_CTL 0x20
-#define FT_GAME 0x40
-#define FT_SCORE 0x80
-#define FT_GAMEOVER 0x100
+#define FT_TEST 0x01 //服务端心跳信息
+#define FT_WALL 0x02 //服务端以字符串方式广播游戏情况
+#define FT_MSG 0x04 //客户端发送的信息，服务端转发的信息
+#define FT_ACK 0x08 //客户端对心跳ACK确认
+#define FT_FIN 0x10 //客户端，服务端下线前，对彼此的告知
+#define FT_CTL 0x20 //客户端发送的控制信息
+#define FT_GAME 0x40 //服务端向客户端广播的游戏实时图画json发送
+#define FT_SCORE 0x80 //服务端对客户端广播的游戏比分变化,json发送(包括进球人)
+#define FT_GAMEOVER 0x100 //游戏结束
 
 struct FootBallMsg {
     //登陆后的信息交互
