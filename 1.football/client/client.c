@@ -9,11 +9,12 @@
 #include "../common/udp_client.h"
 #include "../common/client_recver.h"
 #include "../common/game.h"
-
+#include "../common/send_chat.h"
 char server_ip[20] = {0};
 int server_port = 0;
 char *conf = "./football.conf";
-
+struct FootBallMsg chat_msg;
+struct FootBallMsg ctl_msg;
 
 int sockfd;
 
@@ -31,6 +32,13 @@ int main(int argc, char **argv) {
     struct LogRequest request;
     struct LogResponse response;
     bzero(&request, sizeof(request));
+    
+    bzero(&chat_msg, sizeof(chat_msg));
+    bzero(&ctl_msg, sizeof(ctl_msg));
+    
+    chat_msg.type = FT_MSG;
+    ctl_msg.type = FT_CTL;
+
     while ((opt = getopt(argc, argv, "h:p:n:t:m:")) != -1) {
         switch (opt) {
             case 'h': {
@@ -130,14 +138,43 @@ DBG(GREEN "INFO" NONE
     pthread_create(&draw_t, NULL, draw, NULL);
 #endif
     pthread_create(&recv_t, NULL, client_recv, NULL);  
+/*
+    signal(14, send_ctl);
+
+    struct itimerval itimer;
+    itimer.it_interval.tv_sec = 0;
+    itimer.it_interval.tv_usec = 100000;
+    itimer.it_value.tv_sec = 0;
+    itimer.it_value.tv_usec = 100000;
+
+    setitimer(ITIMER_REAL, &itimer, NULL);
+*/
+
+
+    noecho();
+    cbreak();
+    keypad(stdscr, TRUE);
     while (1) {
-        struct FootBallMsg msg;
-        msg.type = FT_MSG;
-        DBG(YELLOW "Input Message : " NONE);
-        w_gotoxy_puts(Write, 1, 1, "Input Message : ");
-        mvwscanw(Write, 2, 1, "%[^\n]s", msg.msg);
-        if(strlen(msg.msg))
-            send(sockfd, (void *)&msg, sizeof(msg), 0);
+        int c = getchar();
+        switch (c) {
+            case KEY_LEFT: {
+                ctl_msg.ctl.dirx -= 2;
+            } break;
+            case KEY_RIGHT: {
+                ctl_msg.ctl.dirx += 2;
+            } break;
+            case KEY_UP: {
+                ctl_msg.ctl.diry -= 2;
+            } break;
+            case KEY_DOWN: {
+                ctl_msg.ctl.diry += 2;
+            } break;
+            case 13: {
+                send_chat();
+            } break;
+            default:
+                break;
+        }
     }
 
     sleep(10);
