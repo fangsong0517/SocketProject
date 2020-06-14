@@ -45,12 +45,8 @@ struct Ctrl {
     //control
     int carry;
     int kick;
-};
-
-struct TransMsg{
     int dirx;
     int diry;
-    struct Ctrl ctrl;
 };
 
 #define FT_TEST 0x01
@@ -58,14 +54,18 @@ struct TransMsg{
 #define FT_MSG 0x04
 #define FT_ACK 0x08
 #define FT_FIN 0x10
+#define FT_CTL 0x20
+#define FT_GAME 0x40
+#define FT_SCORE 0x80
+#define FT_GAMEOVER 0x100
 
-/*测试，广播, 信息 ,确认*/
 struct FootBallMsg {
     //登陆后的信息交互
     int type;
     int size;
     int team;
     char name[20];
+    struct Ctrl ctl;
     char msg[MAXMSG];
 };
 
