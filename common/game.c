@@ -89,13 +89,20 @@ void *draw(void *arg) {
     }
 }
 
+
+/*在哪个窗口显示信息*/
+/*user谁*/
+/*msg信息*/
 void show_message(WINDOW *win, struct User *user, char *msg, int type) {
+    //时间
     time_t time_now = time(NULL);
     struct tm* tm= localtime(&time_now);
     char timestr[20] = {0};
     char username[80] = {0};
     sprintf(timestr, "%02d:%02d:%02d ", tm->tm_hour, tm->tm_min, tm->tm_sec);
+    
     if (type) {
+        //系统信息
         wattron(win, COLOR_PAIR(4));
         strcpy(username, "Server Info : ");
     } else {
@@ -105,6 +112,7 @@ void show_message(WINDOW *win, struct User *user, char *msg, int type) {
             wattron(win, COLOR_PAIR(2));
         sprintf(username, "%s : ", user->name);
     }
+    //打印信息
     if(message_num < 4) {
         w_gotoxy_puts(win, 10, message_num, username);
         wattron(win, COLOR_PAIR(3));
@@ -114,7 +122,7 @@ void show_message(WINDOW *win, struct User *user, char *msg, int type) {
         message_num++;
     } else {
         message_num = 4;
-        scroll(win);
+        scroll(win);//滚动
         w_gotoxy_puts(win, 10, message_num, username);
         wattron(win, COLOR_PAIR(3));
         w_gotoxy_puts(win, 10 + strlen(username), message_num, msg);
