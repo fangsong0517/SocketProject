@@ -34,9 +34,18 @@ void do_echo(struct User *user) {
         sprintf(tmp, "%s logout.", user->name);
         Show_Message(, NULL, tmp, 1);
         user->online = 0;
-
         int epollfd_tmp = (user->team ? bepollfd : repollfd);
         del_event(epollfd_tmp, user->fd);
+    } else if(msg.type & FT_CTL) {
+        Show_Message(, user, "Ctl Message", 0);
+        if(msg.ctl.dirx || msg.ctl.diry) {
+            user->loc.x += msg.ctl.dirx;
+            user->loc.y += msg.ctl.diry;
+            if(user->loc.x <= 1) user->loc.x = 1;
+            if(user->loc.x >= court.width - 1) user->loc.x = court.width - 1;
+            if(user->loc.y <= 1) user->loc.y = 1;
+            if(user->loc.y >= court.height -1) user->loc.y = court.height - 1;
+        }
     }
 }
 

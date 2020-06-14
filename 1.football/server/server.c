@@ -12,6 +12,7 @@
 #include "../common/udp_server.h"
 #include "../common/game.h"
 #include "../common/server_exit.h"
+#include "../common/server_re_drew.h"
 char *conf = "./server.conf";
 
 struct User *rteam;
@@ -90,6 +91,16 @@ int main(int argc, char **argv) {
     epoll_ctl(epoll_fd, EPOLL_CTL_ADD, listener, &ev);
     struct sockaddr_in client;
     socklen_t len = sizeof(client);
+    
+    signal(14, re_drew);
+
+    struct itimerval itimer;
+    itimer.it_interval.tv_sec = 0;
+    itimer.it_interval.tv_usec = 50000;
+    itimer.it_value.tv_sec = 5;
+    itimer.it_value.tv_usec = 0;
+    setitimer(ITIMER_REAL, &itimer, NULL);
+
     Show_Message( , , "Waiting for Login.", 1);
     while (1) {
         DBG(YELLOW "Main Thread" NONE " : Before epoll_wait\n");

@@ -1,1 +1,1 @@
-gcc server.c ../common/common.c ../common/udp_server.c ../common/udp_epoll.c ../common/udp_client.c ../common/thread_poll.c ../common/sub_reactor.c ../common/server_exit.c ../common/heart_beat.c ../common/global.c ../common/game.c -lcurses -lpthread $1 $2
+gcc server.c ../common/common.c ../common/udp_server.c ../common/udp_epoll.c ../common/udp_client.c ../common/thread_poll.c ../common/sub_reactor.c ../common/server_exit.c ../common/heart_beat.c ../common/global.c ../common/game.c ../common/server_re_drew.c -lcurses -lpthread $1 $2

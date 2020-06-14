@@ -10,6 +10,7 @@
 #include "../common/client_recver.h"
 #include "../common/game.h"
 #include "../common/send_chat.h"
+#include "../common/send_ctl.h"
 char server_ip[20] = {0};
 int server_port = 0;
 char *conf = "./football.conf";
@@ -138,7 +139,7 @@ DBG(GREEN "INFO" NONE
     pthread_create(&draw_t, NULL, draw, NULL);
 #endif
     pthread_create(&recv_t, NULL, client_recv, NULL);  
-/*
+
     signal(14, send_ctl);
 
     struct itimerval itimer;
@@ -148,7 +149,6 @@ DBG(GREEN "INFO" NONE
     itimer.it_value.tv_usec = 100000;
 
     setitimer(ITIMER_REAL, &itimer, NULL);
-*/
 
 
     noecho();
@@ -157,17 +157,17 @@ DBG(GREEN "INFO" NONE
     while (1) {
         int c = getchar();
         switch (c) {
-            case KEY_LEFT: {
+            case 'a': {
                 ctl_msg.ctl.dirx -= 2;
             } break;
-            case KEY_RIGHT: {
+            case 'd': {
                 ctl_msg.ctl.dirx += 2;
             } break;
-            case KEY_UP: {
-                ctl_msg.ctl.diry -= 2;
+            case 'w': {
+                ctl_msg.ctl.diry -= 1;
             } break;
-            case KEY_DOWN: {
-                ctl_msg.ctl.diry += 2;
+            case 's': {
+                ctl_msg.ctl.diry += 1;
             } break;
             case 13: {
                 send_chat();
