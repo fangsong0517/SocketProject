@@ -172,6 +172,9 @@ DBG(GREEN "INFO" NONE
             case 13: {
                 send_chat();
             } break;
+            case ' ': {
+                show_strength();
+            } break;
             default:
                 break;
         }
