@@ -32,7 +32,9 @@ void re_drew_team(struct User *team) {
 
 void re_drew() {
     werase(Football);
+    box(Football_t, 0, 0);
     box(Football, 0, 0);
     re_drew_team(rteam);
     re_drew_team(bteam);
+    wrefresh(Football_t);
 }

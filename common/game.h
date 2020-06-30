@@ -24,7 +24,7 @@
 struct Map court;
 
 
-WINDOW *Football, *Message, *Help, *Score, *Write;
+WINDOW *Football, *Message, *Help, *Score, *Write, *Football_t;
 
 
 WINDOW *create_newwin(int width, int height, int startx, int starty);

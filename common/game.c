@@ -6,10 +6,9 @@
  ************************************************************************/
 
 #include "head.h"
-#include "game.h"
 
 extern struct Map court;
-extern WINDOW *Football, *Message, *Help, *Score, *Write;
+extern WINDOW *Football, *Message, *Help, *Score, *Write, *Football_t;
 int message_num = 0;
 WINDOW *create_newwin(int width, int height, int startx, int starty) {
     //Create WINDOW
@@ -72,14 +71,22 @@ void initfootball() {
     init_pair(4, COLOR_YELLOW, COLOR_BLACK);
     init_pair(5, COLOR_CYAN, COLOR_BLACK);    
     init_pair(6, COLOR_BLUE, COLOR_BLACK);
+    init_pair(7, COLOR_BLUE, COLOR_GREEN);
+    init_pair(8, COLOR_BLUE, COLOR_RED);
+    init_pair(9, COLOR_BLUE, COLOR_WHITE);
+    init_pair(10, COLOR_BLUE, COLOR_YELLOW);
+    init_pair(11, COLOR_BLUE, COLOR_CYAN);
+    init_pair(12, COLOR_BLUE, COLOR_BLUE);
 
-    Football=create_newwin(court.width, court.height, court.start.x, court.start.y);
-    WINDOW *Message_t=create_newwin(court.width, 7, court.start.x, court.start.y + court.height);
-    Message = subwin(Message_t, 5, court.width - 2, court.start.y + court.height + 1, court.start.x);
+    Football_t=create_newwin(court.width + 4, court.height + 2, court.start.x - 2, court.start.y - 1);
+    Football = subwin(Football_t, court.height, court.width, court.start.y, court.start.x);
+    box(Football, 0, 0);
+    WINDOW *Message_t=create_newwin(court.width + 4, 7, court.start.x - 2, court.start.y + 1 + court.height);
+    Message = subwin(Message_t, 5, court.width + 2, court.start.y + court.height + 2, court.start.x - 1);
     scrollok(Message, 1);
-    Help=create_newwin(20, court.height, court.start.x + court.width, court.start.y);
-    Score=create_newwin(20,  7, court.start.x + court.width, court.start.y + court.height);
-    Write=create_newwin(court.width + 20, 5, court.start.x, court.start.y + court.height + 7);
+    Help=create_newwin(20, court.height + 2, court.start.x + court.width + 2, court.start.y - 1);
+    Score=create_newwin(20,  7, court.start.x + court.width + 2, court.start.y + 2 + court.height - 1);
+    Write=create_newwin(court.width + 24, 5, court.start.x - 2, court.start.y + 1 + court.height + 7);
 }
 
 void *draw(void *arg) {
