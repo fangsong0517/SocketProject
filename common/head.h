@@ -30,4 +30,5 @@
 #include "./datatype.h"
 #include <curses.h>
 #include <signal.h>
+#include "./show_data_stream.h"
 #endif

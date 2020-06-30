@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
 
     court.width = atoi(get_value(conf, "COLS"));
     court.height = atoi(get_value(conf, "LINES"));
-    court.start.x = 1;
+    court.start.x = 3;
     court.start.y = 1;
 
 

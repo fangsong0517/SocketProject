@@ -16,6 +16,7 @@ void do_echo(struct User *user) {
     int size = recv(user->fd, (void *)&msg, sizeof(msg), 0);
     user->flag = 10;
     if(msg.type & FT_ACK) {
+        show_data_stream('l');
         if(user->team)//blue_team
             DBG(L_BLUE" %s "NONE"❤\n", user->name);
         else //red_team
@@ -30,6 +31,7 @@ void do_echo(struct User *user) {
         Show_Message(, user, msg.msg, );
         send(user->fd, (void *)&msg, sizeof(msg), 0);//把信息回过去
     } else if(msg.type & FT_FIN) {
+        show_data_stream('e');
         DBG(RED"%s logout.\n", user->name);
         sprintf(tmp, "%s logout.", user->name);
         Show_Message(, NULL, tmp, 1);
@@ -37,6 +39,7 @@ void do_echo(struct User *user) {
         int epollfd_tmp = (user->team ? bepollfd : repollfd);
         del_event(epollfd_tmp, user->fd);
     } else if(msg.type & FT_CTL) {
+        show_data_stream('n');
         Show_Message(, user, "Ctl Message", 0);
         if(msg.ctl.dirx || msg.ctl.diry) {
             user->loc.x += msg.ctl.dirx;
