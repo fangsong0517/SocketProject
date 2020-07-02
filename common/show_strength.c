@@ -47,6 +47,10 @@ void show_strength() {
         wrefresh(Write);
     }
     int arr[5] = {1, 2, 3, 2, 1};
-
+    struct FootBallMsg msg;
+    msg.type = FT_CTL;
+    msg.ctl.action = ACTION_KICK;
+    msg.ctl.strength = arr[mousex / (maxx / 5)];
+    send(sockfd, &msg, sizeof(msg), 0);
     return;
 }

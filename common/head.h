@@ -23,6 +23,7 @@
 #include <poll.h>
 #include <sys/select.h>
 #include <errno.h>
+#include <math.h>
 #include <sys/epoll.h>
 #include "./global.h"
 #include "./color.h"

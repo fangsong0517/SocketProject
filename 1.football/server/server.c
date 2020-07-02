@@ -22,6 +22,8 @@ int port = 0;
 int repollfd, bepollfd;
 
 // struct Map court;
+struct Bpoint ball;
+struct BallStatus ball_status;
 
 int main(int argc, char **argv) {
     int opt, listener, epoll_fd;
@@ -54,6 +56,9 @@ int main(int argc, char **argv) {
 
     rteam = (struct User *)calloc(MAX, sizeof(struct User));
     bteam = (struct User *)calloc(MAX, sizeof(struct User));
+
+    ball.x = court.width / 2;
+    ball.y = court.height / 2;
 
     if ((listener = socket_create_udp(port)) < 0) {
         perror("socket_create_udp");

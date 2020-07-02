@@ -11,6 +11,8 @@
 extern struct User *rteam, *bteam;
 extern WINDOW *Football;
 
+extern struct Bpoint ball;
+extern struct BallStatus ball_status;
 
 void re_drew_player(int team, char *name, struct Point *loc) {
     char p = 'K';
@@ -30,11 +32,23 @@ void re_drew_team(struct User *team) {
     }
 }
 
+void re_draw_ball() {
+    double t = 0.1;
+    if(ball_status.v.x != 0 || ball_status.v.y != 0 ) {
+        ball.x += ball_status.v.x * t + ball_status.a.x * 0.5 * 0.01;
+        ball.y += ball_status.v.y * t + ball_status.a.y * 0.5 * 0.01;
+        ball_status.v.x += ball_status.a.x * t;
+        ball_status.v.y += ball_status.a.y * t;
+    }
+    w_gotoxy_putc(Football, (int)ball.x, (int)ball.y, 'O');
+}
+
 void re_drew() {
     werase(Football);
     box(Football_t, 0, 0);
     box(Football, 0, 0);
     re_drew_team(rteam);
     re_drew_team(bteam);
+    re_draw_ball();
     wrefresh(Football_t);
 }

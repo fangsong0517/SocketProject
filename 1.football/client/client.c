@@ -158,10 +158,10 @@ DBG(GREEN "INFO" NONE
         int c = getchar();
         switch (c) {
             case 'a': {
-                ctl_msg.ctl.dirx -= 2;
+                ctl_msg.ctl.dirx -= 1;
             } break;
             case 'd': {
-                ctl_msg.ctl.dirx += 2;
+                ctl_msg.ctl.dirx += 1;
             } break;
             case 'w': {
                 ctl_msg.ctl.diry -= 1;

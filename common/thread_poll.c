@@ -8,8 +8,10 @@
 #include "thread_poll.h"
 #include "udp_epoll.h"
 #include "game.h"
+#include "ball_status.h"
 extern int repollfd, bepollfd;
-
+extern struct Bpoint ball;
+extern struct BallStatus ball_status;
 void do_echo(struct User *user) {
     struct FootBallMsg msg;
     char tmp[512] = {0};
@@ -48,6 +50,13 @@ void do_echo(struct User *user) {
             if(user->loc.x >= court.width - 1) user->loc.x = court.width - 1;
             if(user->loc.y <= 1) user->loc.y = 1;
             if(user->loc.y >= court.height -1) user->loc.y = court.height - 1;
+        }
+        if(msg.ctl.action & ACTION_KICK) {
+            show_data_stream('k');
+            if(can_kick(&user->loc, msg.ctl.strength)) {
+                ball_status.who = user->team;
+                strcpy(ball_status.name, user->name);
+            }
         }
     }
 }
