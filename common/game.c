@@ -88,9 +88,19 @@ void initfootball() {
     Score=create_newwin(20,  7, court.start.x + court.width + 2, court.start.y + 2 + court.height - 1);
     Write=create_newwin(court.width + 24, 5, court.start.x - 2, court.start.y + 1 + court.height + 7);
 }
+void init_help() {
+    w_gotoxy_puts(Help, 1, 1, "[wasd]:\n| control direction");
+    w_gotoxy_puts(Help, 1, 4, "[ j ]:\n| stop ball");
+    w_gotoxy_puts(Help, 1, 7, "[ k ]:\n| kick ball");
+    w_gotoxy_puts(Help, 1, 10, "[ l ]:\n| carry ball");
+    w_gotoxy_puts(Help, 1, 13, "[space]:\n| choose strength");
+    w_gotoxy_puts(Help, 1, 16,"[enter]:\n| send msg");
+}
+
 
 void *draw(void *arg) {
     initfootball();
+    init_help();
     while(1) {
         sleep(10);
     }

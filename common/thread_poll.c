@@ -53,11 +53,28 @@ void do_echo(struct User *user) {
         }
         if(msg.ctl.action & ACTION_KICK) {
             show_data_stream('k');
+            ball_status.carry = 0;
             if(can_kick(&user->loc, msg.ctl.strength)) {
                 ball_status.who = user->team;
                 strcpy(ball_status.name, user->name);
             }
         }
+        if(msg.ctl.action & ACTION_STOP) {
+            show_data_stream('j') ;
+            ball_status.carry = 0;
+            if(ball_stop(&user->loc)) {
+            ball_status.who = user->team;
+            strcpy(ball_status.name, user->name);
+            }            
+        }
+        if(msg.ctl.action & ACTION_CARRY) {
+            show_data_stream('l');
+            ball_status.carry = 1;
+            user->carry = 1; 
+            ball_status.who = user->team;
+            strcpy(ball_status.name, user->name);
+        }
+
     }
 }
 

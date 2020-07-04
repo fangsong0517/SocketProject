@@ -36,6 +36,7 @@ struct User{
     int flag; //未响应的次数
    // struct sockaddr_in addr;
     struct Point loc;//position
+    int carry;
 };
 
 struct Map{
@@ -95,7 +96,11 @@ struct BallStatus {
     int t;
     int who;
     char name[20];
+    int carry;
     //pthread_mutex_t mutex;
 };
-
+struct Score{
+    int red;
+    int blue;
+};
 #endif

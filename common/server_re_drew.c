@@ -33,8 +33,10 @@ void re_drew_team(struct User *team) {
 }
 
 void re_draw_ball() {
+    int px, py;
+    if(ball_status.carry == 0) {
     double t = 0.1;
-    if((int)ball_status.v.x != 0 ||(int) ball_status.v.y != 0) {
+    if((int)ball_status.v.x != 0 ||(int)ball_status.v.y != 0 ) {
         ball.x += ball_status.v.x * t + ball_status.a.x * 0.5 * 0.01;
         ball.y += ball_status.v.y * t + ball_status.a.y * 0.5 * 0.01;
         ball_status.v.x += ball_status.a.x * t;
@@ -51,35 +53,31 @@ void re_draw_ball() {
 		ball_status.v.x = ball_status.v.y = 0;
 		ball_status.a.x = ball_status.a.y = 0;
 	}
+    } else if(ball_status.carry == 1) {
+        int dir[8][2] = {1, 0, -1, 0,
+                        1, 1, 1, -1,
+                        0, 1, 0, -1,
+                        -1, 1, -1, -1};
+        for(int i = 0; i < MAX; i++) {
+            if(rteam[i].carry == 1) {
+                px = rteam[i].loc.x;
+                py = rteam[i].loc.y;
+            }
+            if(bteam[i].carry == 1) {
+                px = bteam[i].loc.x;
+                py = bteam[i].loc.y;
+            }
+        }
+        if (abs(px - (int)ball.x) <= 3 && abs(py - (int)ball.y <= 3)) {
+		    ball_status.v.x = ball_status.v.y = 0;
+		    ball_status.a.x = ball_status.a.y = 0;
+            ball.x = px + dir[rand() % 8][rand() % 2];
+            ball.y = py + dir[rand() % 8][rand() % 2];
+        }
+    }
     w_gotoxy_putc(Football, (int)ball.x, (int)ball.y, 'O');
 }
-/*
-void re_draw_ball() {
-	double t = 0.1;
-	if (ball_status.v.x != 0 || ball_status.v.y != 0) {
-		ball.x += ball_status.v.x * 0.1 + ball_status.a.x * 0.5 * 0.01;
-		ball.y += ball_status.v.y * 0.1 + ball_status.a.y * 0.5 * 0.01;
-		ball_status.v.x += ball_status.a.x * 0.1;
-		ball_status.v.y += ball_status.a.y * 0.1;
-	}
-	if (abs(ball_status.v.y) < 1 && abs(ball_status.v.x) < 1) {
-		ball_status.v.x = ball_status.v.y = 0;
-		ball_status.a.x = ball_status.a.y = 0;
-	}
-	if (ball_status.v.x || ball_status.v.y) {
-		char tmp[512] = {0};
-		sprintf(tmp, "a(%lf, %lf) v(%lf, %lf)", ball_status.a.x, ball_status.a.y, ball_status.v.x, ball_status.v.y);
-		Show_Message( , NULL, tmp, 1);
-	}
-	if (ball.x <= 0 || ball.x >= 114 || ball.y <= 0 || ball.y >= 24) {
-		ball.x = court.width / 2;
-		ball.y = court.height / 2;
-		ball_status.v.x = ball_status.v.y = 0;
-		ball_status.a.x = ball_status.a.y = 0;
-	}
-	w_gotoxy_putc(Football, (int)ball.x, (int)ball.y, 'o');
-}
-*/
+
 void re_drew() {
     werase(Football);
     box(Football_t, 0, 0);

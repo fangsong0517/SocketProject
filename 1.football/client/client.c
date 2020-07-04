@@ -19,6 +19,14 @@ struct FootBallMsg ctl_msg;
 
 int sockfd;
 
+void ball_send_stop() {
+    struct FootBallMsg msg; 
+    bzero(&msg, sizeof(msg));
+    msg.type = FT_CTL;
+    msg.ctl.action = ACTION_STOP;
+    send(sockfd, &msg, sizeof(msg), 0);   
+}
+
 void logout(int signum) {
     struct FootBallMsg msg;
     msg.type = FT_FIN;
@@ -175,6 +183,16 @@ DBG(GREEN "INFO" NONE
             case ' ': {
                 show_strength();
             } break;
+            case 'j':{
+                ball_send_stop();
+            } break;
+            case 'l':{
+                struct FootBallMsg msg; 
+                bzero(&msg, sizeof(msg));
+                msg.type = FT_CTL;
+                msg.ctl.action = ACTION_CARRY;
+                send(sockfd, &msg, sizeof(msg), 0);   
+            }break;
             default:
                 break;
         }

@@ -35,6 +35,7 @@ void gotoxy_puts(int x, int y,char *c);
 void w_gotoxy_putc(WINDOW *win, int x, int y, char c);
 void w_gotoxy_puts(WINDOW *win, int x, int y, char *s);
 void initfootball();
+void init_help();
 void *draw(void *arg);
 void show_message(WINDOW *win, struct User *user, char *msg, int type);
 #endif
