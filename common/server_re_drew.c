@@ -13,6 +13,7 @@ extern WINDOW *Football;
 
 extern struct Bpoint ball;
 extern struct BallStatus ball_status;
+extern struct Score score;
 
 void re_drew_player(int team, char *name, struct Point *loc) {
     char p = 'K';
@@ -48,6 +49,12 @@ void re_draw_ball() {
 		Show_Message( , NULL, tmp, 1);
 	}
 	if (ball.x <= 0 || ball.x >= 114 || ball.y <= 0 || ball.y >= 24) {
+        if((int)ball.y >= court.height / 2 - 4 && (int)ball.y <= court.height / 2 + 4 && ball.x <= 1) {
+            score.blue ++;
+        }
+        if((int)ball.y >= court.height / 2 - 4 && (int)ball.y <= court.height / 2 + 4 && ball.x >= 114) {
+            score.red ++;
+        }     
 		ball.x = court.width / 2;
 		ball.y = court.height / 2;
 		ball_status.v.x = ball_status.v.y = 0;
@@ -78,12 +85,29 @@ void re_draw_ball() {
     w_gotoxy_putc(Football, (int)ball.x, (int)ball.y, 'O');
 }
 
+void ball_door(){
+    for(int i = court.height / 2 - 4; i <= court.height / 2 + 4; i++){
+        w_gotoxy_putc(Football_t, 1, i, 'x');
+        w_gotoxy_putc(Football_t, 117, i, 'x');
+    }
+}
+
+void init_score() {
+    w_gotoxy_puts(Score, 1, 1, "red blue\n");
+    char tmp[50];
+    sprintf(tmp, "%d:%d", score.red, score.blue);
+    w_gotoxy_puts(Score, 1, 2, tmp);
+}
+
+
 void re_drew() {
     werase(Football);
     box(Football_t, 0, 0);
     box(Football, 0, 0);
     re_drew_team(rteam);
     re_drew_team(bteam);
+   // ball_door();
+    init_score();
     re_draw_ball();
     wrefresh(Football_t);
 }

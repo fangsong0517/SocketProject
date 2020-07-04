@@ -10,5 +10,6 @@
 void re_drew_player(int team, char *name, struct Point *loc);
 void re_drew_team(struct User *team);
 void re_draw_ball();
+void init_score();
 void re_drew();
 #endif

@@ -24,7 +24,7 @@ int repollfd, bepollfd;
 // struct Map court;
 struct Bpoint ball;
 struct BallStatus ball_status;
-
+struct Score score;
 int main(int argc, char **argv) {
     int opt, listener, epoll_fd;
     pthread_t draw_t, red_t, blue_t, heart_t;
