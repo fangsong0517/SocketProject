@@ -9,6 +9,10 @@
 extern WINDOW *Write;
 extern int sockfd;
 
+#include "head.h"
+extern WINDOW *Write;
+extern int sockfd;
+
 void show_strength() {
     int mousex = 2, offset = 1;
     int maxx, maxy, strength;
@@ -29,6 +33,7 @@ void show_strength() {
         char c = getchar();
         if(c != -1) {
             if(c == ' ' || c == 'k') {
+                make_block(0);
                 break;
             }
         }
@@ -48,9 +53,11 @@ void show_strength() {
     }
     int arr[5] = {1, 2, 3, 2, 1};
     struct FootBallMsg msg;
+    bzero(&msg, sizeof(msg));
     msg.type = FT_CTL;
     msg.ctl.action = ACTION_KICK;
     msg.ctl.strength = arr[mousex / (maxx / 5)];
     send(sockfd, &msg, sizeof(msg), 0);
     return;
 }
+
