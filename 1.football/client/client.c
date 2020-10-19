@@ -149,7 +149,6 @@ DBG(GREEN "INFO" NONE
     pthread_create(&recv_t, NULL, client_recv, NULL);  
 
     signal(14, send_ctl);
-
     struct itimerval itimer;
     itimer.it_interval.tv_sec = 0;
     itimer.it_interval.tv_usec = 100000;
